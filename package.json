@@ -19,9 +19,11 @@
   "homepage": "https://github.com/aanufryi-UNCC/final-project-itis4166#readme",
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "lint": "^1.1.2"
+    "lint": "^1.1.2",
+    "morgan": "^1.10.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"

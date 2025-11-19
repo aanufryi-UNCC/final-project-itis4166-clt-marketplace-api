@@ -1,0 +1,29 @@
+{
+  "name": "final-project-itis4166",
+  "version": "1.0.0",
+  "description": "CLT marketplace application!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aanufryi-UNCC/final-project-itis4166.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aanufryi-UNCC/final-project-itis4166/issues"
+  },
+  "homepage": "https://github.com/aanufryi-UNCC/final-project-itis4166#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "lint": "^1.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}

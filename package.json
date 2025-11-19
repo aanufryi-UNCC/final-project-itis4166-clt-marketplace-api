@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/aanufryi-UNCC/final-project-itis4166#readme",
   "dependencies": {
+    "@prisma/client": "^7.0.0",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
@@ -26,6 +27,7 @@
     "morgan": "^1.10.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.11"
+    "nodemon": "^3.1.11",
+    "prisma": "^6.19.0"
   }
 }

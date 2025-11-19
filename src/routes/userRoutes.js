@@ -1,20 +1,16 @@
 import express from 'express';
+import { getUser, updateUser, deleteUser } from '../controllers/userController';
+
 const router = express.Router();
 
 // GET /user/:id
-router.get('/:id', (req, res) => {
-  res.json({ message: "User profile fetched" });
-});
+router.get('/:id', getUser);
 
 // PUT /user/:id
-router.put('/:id', (req, res) => {
-  res.json({ message: "User updated" });
-});
+router.put('/:id', updateUser);
 
 // DELETE /user/:id
-router.delete('/:id', (req, res) => {
-  res.status(204).send();
-});
+router.delete('/:id', deleteUser);
 
 // GET /user/:id/items
 router.get('/:id/items', (req, res) => {

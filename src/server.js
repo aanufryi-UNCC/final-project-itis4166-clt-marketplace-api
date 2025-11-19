@@ -1,9 +1,16 @@
 import express from 'express';
+import morgan from 'morgan';
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(morgan('dev'));
+
+//Test route to see if server starts
+app.get('/', (req, res) => {
+    res.json({ message: 'Marketplace API running!' });
+})
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');
@@ -20,6 +27,6 @@ app.use((err, req, res, next) => {
   res.status(err.status).json({ error: err.message });
 });
 
-app.listen(3000, () => console.log(`Server is up and running on port 3000`));
+app.listen(PORT, () => console.log(`Server is up and running on http://localhost:${PORT}`));
 
 export default app;

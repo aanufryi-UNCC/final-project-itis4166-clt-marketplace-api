@@ -1,16 +1,16 @@
 import express from 'express';
-import { getUser, updateUser, deleteUser } from '../controllers/userController';
+import { getUserHandler, updateUserHandler, deleteUserHandler } from '../controllers/userController.js';
 
 const router = express.Router();
 
 // GET /user/:id
-router.get('/:id', getUser);
+router.get('/:id', getUserHandler);
 
 // PUT /user/:id
-router.put('/:id', updateUser);
+router.put('/:id', updateUserHandler);
 
 // DELETE /user/:id
-router.delete('/:id', deleteUser);
+router.delete('/:id', deleteUserHandler);
 
 // GET /user/:id/items
 router.get('/:id/items', (req, res) => {

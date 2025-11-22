@@ -1,26 +1,26 @@
-import { getUserProfile, registerUser, updateUser, deleteUser } from "../services/userService";
+import { getUserProfileService, updateUserService, deleteUserService } from "../services/userService.js";
 
-export async function getUser(req, res) {
+export async function getUserHandler(req, res) {
     try {
-        const user = await getUserProfile(req.params.id);
+        const user = await getUserProfileService(req.params.id);
         res.status(200).json(user);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch user profile'});
     }
 }
 
-export async function updateUser(req, res) {
+export async function updateUserHandler(req, res) {
     try {
-        const updated = await updateUser(req.params.id, req.body);
+        const updated = await updateUserService(req.params.id, req.body);
         res.status(200).json(updated)
     } catch (error) {
         res.status(500).json({ error: 'Failed to update profile'});
     }
 }
 
-export async function deleteUser(req, res) {
+export async function deleteUserHandler(req, res) {
     try {
-        await deleteUser(req.params.id);
+        await deleteUserService(req.params.id);
         res.status(204).json();
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch user profile'});

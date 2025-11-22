@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "CLT marketplace application!",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
   },
   "repository": {
     "type": "git",
@@ -19,15 +22,21 @@
   "homepage": "https://github.com/aanufryi-UNCC/final-project-itis4166#readme",
   "dependencies": {
     "@prisma/client": "^7.0.0",
+    "@prisma/adapter-pg": "^7.0.0",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^5.1.0",
+    "express-validator": "^7.3.1",
     "jsonwebtoken": "^9.0.2",
     "lint": "^1.1.2",
-    "morgan": "^1.10.1"
+    "morgan": "^1.10.1",
+    "pg": "^8.16.3"
   },
   "devDependencies": {
+    "@prisma/client": "^7.0.0",
+    "@prisma/engines": "^7.0.0",
     "nodemon": "^3.1.11",
-    "prisma": "^6.19.0"
+    "prisma": "^7.0.0"
   }
 }

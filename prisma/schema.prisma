@@ -5,11 +5,109 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
+  //output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  MODERATOR
+}
+
+enum OrderStatus {
+  PENDING
+  SHIPPED
+  COMPLETED
+  CANCELLED
+}
+
+enum ReviewRating {
+  ONE
+  TWO
+  THREE
+  FOUR
+  FIVE
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  username     String    @unique
+  email        String    @unique
+  passwordHash String
+  role         Role      @default(USER)
+  joinDate     DateTime  @default(now())
+  items        Item[]    //items a user is selling
+  orders       Order[]   @relation("BuyerOrders")   // items users have bought
+  sales        Order[]   @relation("SellerOrders")  // items a user has sold
+  reviewsWritten Review[] @relation("ReviewsWritten") // reviews written by user
+  refreshToken RefreshToken?
+  @@map("users")
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    Int      @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@map("refresh_tokens")
+}
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  items Item[]
+  @@map("categories")
+}
+
+model Item {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  price       Int //cents
+  categoryId  Int
+  sellerId    Int
+  category    Category @relation(fields: [categoryId], references: [id])
+  seller      User     @relation(fields: [sellerId],   references: [id], onDelete: Cascade)
+  orders      Order[]
+  reviews     Review[]
+  @@map("items")
+}
+
+model Order {
+  id            Int          @id @default(autoincrement())
+  itemId        Int
+  buyerId       Int
+  sellerId      Int // useful for searches
+  status        OrderStatus  @default(PENDING)
+  totalPrice    Int //cents
+  quantity      Int          @default(1)
+  paymentMethod String
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  item          Item         @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  buyer         User         @relation("BuyerOrders",  fields: [buyerId],  references: [id], onDelete: Cascade)
+  seller        User         @relation("SellerOrders", fields: [sellerId], references: [id], onDelete: Cascade)
+  @@map("orders")
+}
+
+model Review {
+  id          Int           @id @default(autoincrement())
+  comment     String?       // optional text review
+  rating      ReviewRating  // 1-5 stars
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  //who wrote the review
+  reviewer    User          @relation("ReviewsWritten", fields: [reviewerId], references: [id], onDelete: Cascade)
+  reviewerId  Int
+  //which item is being reviewed
+  item        Item          @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  itemId      Int
+  @@index([reviewerId])   // For search by user
+  @@index([itemId])       // For search by item
+  @@map("reviews")
 }

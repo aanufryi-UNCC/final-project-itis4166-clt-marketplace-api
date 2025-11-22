@@ -1,29 +1,28 @@
 import express from 'express';
+import { authenticate } from '../middleware/authenticate.js';
+import {
+  getItemsHandler,
+  getItemHandler,
+  createItemHandler,
+  updateItemHandler,
+  deleteItemHandler,
+  getItemReviewsHandler
+} from '../controllers/itemController.js';
+import {
+  validateItemId,
+  validateCreateItem,
+  validateUpdateItem
+} from '../middleware/itemValidators.js';
+
 const router = express.Router();
 
-// GET /items
-router.get('/', (req, res) => {
-  res.json({ message: "All items fetched" });
-});
-
-// POST /items
-router.post('/', (req, res) => {
-  res.json({ message: "Item created" });
-});
-
-// GET /items/:id
-router.get('/:id', (req, res) => {
-  res.json({ message: "Item details fetched" });
-});
-
-// PUT /items/:id
-router.put('/:id', (req, res) => {
-  res.json({ message: "Item updated" });
-});
-
-// DELETE /items/:id
-router.delete('/:id', (req, res) => {
-  res.status(204).send();
-});
+//public
+router.get('/',                getItemsHandler);
+router.get('/:id',             validateItemId, getItemHandler);
+router.get('/:id/reviews',     validateItemId, getItemReviewsHandler);
+//authenticated users
+router.post('/',               authenticate, validateCreateItem, createItemHandler);
+router.put('/:id',             authenticate, validateItemId, validateUpdateItem, updateItemHandler);
+router.delete('/:id',          authenticate, validateItemId, deleteItemHandler);
 
 export default router;

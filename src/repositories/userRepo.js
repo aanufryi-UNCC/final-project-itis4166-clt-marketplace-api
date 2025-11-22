@@ -1,4 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from '../config/db.js';
+console.log('userRepo Prisma client loaded'); 
 
 export async function findById(id) {
     return await prisma.user.findUnique( {

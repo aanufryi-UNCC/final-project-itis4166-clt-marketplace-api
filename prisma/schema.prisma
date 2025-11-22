@@ -25,6 +25,14 @@ enum OrderStatus {
   CANCELLED
 }
 
+enum ReviewRating {
+  ONE
+  TWO
+  THREE
+  FOUR
+  FIVE
+}
+
 model User {
   id           Int       @id @default(autoincrement())
   username     String    @unique
@@ -35,6 +43,7 @@ model User {
   items        Item[]    //items a user is selling
   orders       Order[]   @relation("BuyerOrders")   // items users have bought
   sales        Order[]   @relation("SellerOrders")  // items a user has sold
+  reviewsWritten Review[] @relation("ReviewsWritten") // reviews written by user
   refreshToken RefreshToken?
   @@map("users")
 }
@@ -64,6 +73,7 @@ model Item {
   category    Category @relation(fields: [categoryId], references: [id])
   seller      User     @relation(fields: [sellerId],   references: [id], onDelete: Cascade)
   orders      Order[]
+  reviews     Review[]
   @@map("items")
 }
 
@@ -83,4 +93,21 @@ model Order {
   buyer         User         @relation("BuyerOrders",  fields: [buyerId],  references: [id], onDelete: Cascade)
   seller        User         @relation("SellerOrders", fields: [sellerId], references: [id], onDelete: Cascade)
   @@map("orders")
+}
+
+model Review {
+  id          Int           @id @default(autoincrement())
+  comment     String?       // optional text review
+  rating      ReviewRating  // 1-5 stars
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  //who wrote the review
+  reviewer    User          @relation("ReviewsWritten", fields: [reviewerId], references: [id], onDelete: Cascade)
+  reviewerId  Int
+  //which item is being reviewed
+  item        Item          @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  itemId      Int
+  @@index([reviewerId])   // For search by user
+  @@index([itemId])       // For search by item
+  @@map("reviews")
 }

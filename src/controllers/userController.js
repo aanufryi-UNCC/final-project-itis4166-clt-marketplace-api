@@ -1,4 +1,4 @@
-import { getUserProfileService, registerUserService, updateUserService, deleteUserService } from "../services/userService.js";
+import { getUserProfileService, updateUserService, deleteUserService } from "../services/userService.js";
 
 export async function getUserHandler(req, res) {
     try {

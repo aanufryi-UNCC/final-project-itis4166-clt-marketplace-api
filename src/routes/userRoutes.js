@@ -1,25 +1,26 @@
 import express from 'express';
-import { getUserHandler, updateUserHandler, deleteUserHandler } from '../controllers/userController.js';
+import { authenticate } from '../middleware/authenticate.js';
+import { authorizeModerator } from '../middleware/authorizeModerator.js';
+import {
+  getUserHandler,
+  updateUserHandler,
+  deleteUserHandler
+} from '../controllers/userController.js';
+import {
+  validateUserId,
+  validateRoleChange
+} from '../middleware/userValidators.js';
 
 const router = express.Router();
 
-// GET /user/:id
-router.get('/:id', getUserHandler);
+//public
+router.get('/users/:id', validateUserId, getUserHandler);
 
-// PUT /user/:id
-router.put('/:id', updateUserHandler);
+// owner and mod
+router.patch('/users/:id', authenticate, validateUserId, updateUserHandler);
+router.delete('/users/:id', authenticate, validateUserId, deleteUserHandler);
 
-// DELETE /user/:id
-router.delete('/:id', deleteUserHandler);
-
-// GET /user/:id/items
-router.get('/:id/items', (req, res) => {
-  res.json({ message: "Items listed by user" });
-});
-
-// GET /user/:id/orders
-router.get('/:id/orders', (req, res) => {
-  res.json({ message: "Orders made by user" });
-});
+//mod only
+router.patch('/users/:id/role', authenticate, authorizeModerator, validateUserId, validateRoleChange, updateUserHandler);
 
 export default router;

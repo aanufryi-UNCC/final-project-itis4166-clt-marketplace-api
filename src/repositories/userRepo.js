@@ -73,3 +73,27 @@ export async function deleteUser(id) {
 export async function findAllUsers() {
     return prisma.user.findMany({ orderBy: { id: 'asc' } });
 }
+
+export async function getUserWithReviews(userId) {
+  return prisma.user.findUnique({
+    where: { id: Number(userId) },
+    include: {
+      reviewsWritten: {
+        include: { item: { select: { id: true, name: true } } },
+        orderBy: { createdAt: 'desc' },
+      },
+    },
+  });
+}
+
+export async function getUserByUsernameWithReviews(username) {
+  return prisma.user.findUnique({
+    where: { username },
+    include: {
+      reviewsWritten: {
+        include: { item: { select: { id: true, name: true } } },
+        orderBy: { createdAt: 'desc' },
+      },
+    },
+  });
+}

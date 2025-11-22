@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import {Prisma} from '../generated/prisma/index.js'
-//import { Prisma } from '@prisma/client'
+//import {Prisma} from '../generated/prisma/index.js'
+import { Prisma } from '@prisma/client'
 import { createUser, findUserByEmail } from '../repositories/userRepo.js';
 
 const JWT_SECRET = process.env.JWT_SECRET;

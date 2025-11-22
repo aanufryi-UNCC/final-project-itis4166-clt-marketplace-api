@@ -1,19 +1,15 @@
 import express from 'express';
+import { signUpHandler, logInHandler, logOutHandler } from '../controllers/authController.js';
+
 const router = express.Router();
 
 // POST /auth/register
-router.post('/register', (req, res) => {
-  res.json({ message: "Register endpoint hit" });
-});
+router.post('/register', signUpHandler);
 
 // POST /auth/login
-router.post('/login', (req, res) => {
-  res.json({ message: "Login endpoint hit" });
-});
+router.post('/login', logInHandler);
 
 // POST /auth/logout
-router.post('/logout', (req, res) => {
-  res.json({ message: "Logout successful." });
-});
+router.post('/logout', logOutHandler);
 
 export default router;

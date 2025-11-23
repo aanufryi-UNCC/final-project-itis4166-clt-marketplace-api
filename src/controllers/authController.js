@@ -17,6 +17,7 @@ export async function logInHandler(req, res) {
 //For logging out users using refresh token
 export async function logOutHandler(req, res) {
     const { refreshToken } = req.body;
+    if (!refreshToken) return res.status(400).json({ error: 'No refresh token provided' });
     await logOut(refreshToken);
     res.status(200).json({ message: 'Logout successful.' });
 }

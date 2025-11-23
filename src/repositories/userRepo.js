@@ -13,8 +13,23 @@ export async function findUserByEmail(email) {
 
 export async function createUser(data) {
     return await prisma.user.create({
-        data: data,
-        omit: {passwordHash: true}
+        data: data
+    });
+}
+
+// Save or update refresh token
+export async function upsertRefreshToken(userId, token) {
+    return await prisma.refreshToken.upsert({
+        where: { userId },
+        update: { token },
+        create: { userId, token },
+    });
+}
+
+// Delete refresh token
+export async function deleteRefreshToken(token) {
+    return await prisma.refreshToken.deleteMany({
+        where: { token },
     });
 }
 

@@ -14,7 +14,7 @@ export async function findUserByEmail(email) {
 export async function createUser(data) {
     return await prisma.user.create({
         data: data,
-        omit: {passwordHashed: true}
+        omit: {passwordHash: true}
     });
 }
 

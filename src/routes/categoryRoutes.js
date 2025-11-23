@@ -15,10 +15,10 @@ import {
 
 const router = express.Router();
 
-router.get('/categories', getAllCategoriesHandler);
-router.get('/categories/:id', validateCategoryId, getCategoryHandler);
-router.post('/categories', authenticate, authorizeModerator, validateCategory, createCategoryHandler);
-router.patch('/categories/:id', authenticate, authorizeModerator, validateCategoryId, validateCategory, updateCategoryHandler);
-router.delete('/categories/:id', authenticate, authorizeModerator, validateCategoryId, deleteCategoryHandler);
+router.get('/', getAllCategoriesHandler);
+router.get('/:id', validateCategoryId, getCategoryHandler);
+router.post('/', authenticate, authorizeModerator, validateCategory, createCategoryHandler);
+router.patch('/:id', authenticate, authorizeModerator, validateCategoryId, validateCategory, updateCategoryHandler);
+router.delete('/:id', authenticate, authorizeModerator, validateCategoryId, deleteCategoryHandler);
 
 export default router;

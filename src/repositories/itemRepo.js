@@ -7,7 +7,43 @@ export async function createItem(data) {
 export async function findItemById(id) {
   return prisma.item.findUnique({
     where: { id: Number(id) },
-    include: { category: true, seller: true, reviews: true },
+    select: {
+      id: true,
+      name: true,
+      description: true,
+      price: true,
+      createdAt: true,
+
+      category: {
+        select: {
+          id: true,
+          name: true,
+        }
+      },
+
+      seller: {
+        select: {
+          id: true,
+          username: true,
+          role: true,
+        }
+      },
+
+      reviews: {
+        select: {
+          id: true,
+          rating: true,
+          comment: true,
+          createdAt: true,
+          reviewer: {
+            select: {
+              id: true,
+              username: true
+            }
+          }
+        }
+      }
+    }
   });
 }
 

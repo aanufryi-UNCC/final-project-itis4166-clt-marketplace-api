@@ -28,7 +28,7 @@ export async function createItemHandler(req, res, next) {
 
 export async function updateItemHandler(req, res, next) {
   try { 
-    const updated = await ItemService.updateItem(req.params.id, req.body); 
+    const updated = await ItemService.updateItem(req.params.id, req.body, req.user); 
     res.json(updated); 
     } catch (e) { 
         next(e); 
@@ -36,7 +36,7 @@ export async function updateItemHandler(req, res, next) {
 }
 
 export async function deleteItemHandler(req, res, next) {
-  try { await ItemService.deleteItem(req.params.id); 
+  try { await ItemService.deleteItem(req.params.id, req.user); 
     res.json({ message: 'Item deleted' }); 
         } catch (e) { 
             next(e); 
@@ -45,6 +45,7 @@ export async function deleteItemHandler(req, res, next) {
 
 export async function getItemReviewsHandler(req, res, next) {
   try { 
-    res.json(await ItemService.getItemReviews(req.params.id)); 
+    const reviews = await ItemService.getItemReviews(req.params.id); 
+    res.json(reviews);
     } catch (e) { next(e); }
 }

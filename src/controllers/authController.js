@@ -10,8 +10,8 @@ export async function signUpHandler(req, res) {
 //For logging in existing users. Need email, password
 export async function logInHandler(req, res) {
     const { email, password } = req.body; 
-    const accessToken = await logIn(email, password);
-    res.status(200).json({ accessToken });
+    const tokens = await logIn(email, password);
+    res.status(200).json({ tokens });
 }
 
 //For logging out users using refresh token

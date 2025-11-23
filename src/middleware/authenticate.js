@@ -13,7 +13,11 @@ export function authenticate(req, res, next) {
   const token = authHeader.split(' ')[1];
   try {
     const payload = jwt.verify(token, JWT_SECRET);   
-    req.user = payload; // Will use email and role 
+    req.user = {
+      id: payload.userId,  
+      email: payload.email,
+      role: payload.role
+    };
     next();
   } catch {
     const err = new Error('Not authenticated');

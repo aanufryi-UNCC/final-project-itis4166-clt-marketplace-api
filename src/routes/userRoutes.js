@@ -10,17 +10,20 @@ import {
   validateUserId,
   validateRoleChange
 } from '../middleware/userValidators.js';
+import {
+    filterUserUpdateFields
+} from '../middleware/updateValidators.js'
 
 const router = express.Router();
 
 //public
-router.get('/users/:id', validateUserId, getUserHandler);
+router.get('/:id', validateUserId, getUserHandler);
 
 // owner and mod
-router.patch('/users/:id', authenticate, validateUserId, updateUserHandler);
-router.delete('/users/:id', authenticate, validateUserId, deleteUserHandler);
+router.patch('/:id', authenticate, validateUserId, filterUserUpdateFields, updateUserHandler);
+router.delete('/:id', authenticate, validateUserId, deleteUserHandler);
 
 //mod only
-router.patch('/users/:id/role', authenticate, authorizeModerator, validateUserId, validateRoleChange, updateUserHandler);
+router.patch('/:id/role', authenticate, authorizeModerator, validateUserId, validateRoleChange, updateUserHandler);
 
 export default router;

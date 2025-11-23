@@ -2,9 +2,15 @@ import prisma from '../config/db.js';
 console.log('userRepo Prisma client loaded'); 
 
 export async function findById(id) {
-    return await prisma.user.findUnique( {
-        where: {id: Number(id)},
-    } );
+    return await prisma.user.findUnique({
+        where: { id: Number(id) }, // Ensure id is a number
+        select: {
+            id: true,
+            username: true,
+            email: true,
+            role: true,
+        },
+      });
 }
 //For checking emails when creating accounts
 export async function findUserByEmail(email) {

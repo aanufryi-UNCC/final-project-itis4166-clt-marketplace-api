@@ -48,7 +48,7 @@ function generateRefreshToken(user) {
 }
 
 export async function issueTokens(user) {
-    const accessToken = jwt.sign({ email: user.email, role: user.role }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+    const accessToken = jwt.sign({ userId: user.id, email: user.email, role: user.role }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
     const refreshToken = generateRefreshToken(user);
 
     await upsertRefreshToken(user.id, refreshToken);

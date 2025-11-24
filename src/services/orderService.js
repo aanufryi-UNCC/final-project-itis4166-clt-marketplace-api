@@ -11,7 +11,6 @@ export async function getOrderService(id) {
 export async function createOrderService(data) {
   return OrderRepo.createOrder(data);
 }
-
 export async function updateOrderStatusService(id, status) {
   return OrderRepo.updateOrder(id, { status });
 }

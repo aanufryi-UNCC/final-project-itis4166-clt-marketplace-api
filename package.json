@@ -13,6 +13,9 @@
     "type": "git",
     "url": "git+https://github.com/aanufryi-UNCC/final-project-itis4166.git"
   },
+  "prisma": {
+  "seed": "node prisma/seed.js"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",

@@ -8,8 +8,6 @@ export const validateOrderId = [
 
 export const validateCreateOrder = [
   body('itemId').isInt({ min: 1 }).withMessage('Item ID must be a positive integer'),
-  body('buyerId').isInt({ min: 1 }).withMessage('Buyer ID must be a positive integer'),
-  body('sellerId').isInt({ min: 1 }).withMessage('Seller ID must be a positive integer'),
   body('quantity')
     .isInt({ min: 1 })
     .withMessage('Quantity must be at least 1'),

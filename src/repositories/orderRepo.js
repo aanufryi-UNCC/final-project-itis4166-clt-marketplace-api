@@ -1,7 +1,29 @@
 import prisma from '../config/db.js';
 
 export async function createOrder(data) {
-  return prisma.order.create({ data });
+  const { itemId, quantity, totalPrice, paymentMethod, buyerId } = data;
+
+  // Find the item first to get the sellerId
+  const item = await prisma.item.findUnique({
+    where: { id: Number(itemId) },
+  });
+
+  if (!item) {
+    const err = new Error("Item not found");
+    err.status = 404;
+    throw err;
+  }
+
+  return prisma.order.create({
+    data: {
+      quantity: Number(quantity),
+      totalPrice: Number(totalPrice),
+      paymentMethod,
+      item: { connect: { id: Number(itemId) } },
+      buyer: { connect: { id: Number(buyerId) } },
+      seller: { connect: { id: Number(item.sellerId) } }, 
+    },
+  });
 }
 
 export async function findOrderById(id) {
@@ -11,12 +33,16 @@ export async function findOrderById(id) {
   });
 }
 
-export async function getAllOrders(skip = 0, take = 100) {
+export async function getAllOrders(skip = 0, take = 50) {
   return prisma.order.findMany({
     skip,
     take,
     orderBy: { createdAt: 'desc' },
-    include: { item: true, buyer: true, seller: true },
+    include: {
+      item: { select: { id: true, name: true, price: true } },
+      buyer: { select: { id: true, username: true } },
+      seller: { select: { id: true, username: true } },
+    },
   });
 }
 

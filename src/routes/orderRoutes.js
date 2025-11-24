@@ -15,10 +15,10 @@ import {
 
 const router = express.Router();
 
-router.get('/orders', authenticate, getOrdersHandler);
-router.get('/orders/:id', authenticate, validateOrderId, getOrderHandler);
-router.post('/orders', authenticate, validateCreateOrder, createOrderHandler);
-router.patch('/orders/:id/status', authenticate, validateOrderId, validateStatusUpdate, updateOrderHandler);
-router.delete('/orders/:id', authenticate, validateOrderId, deleteOrderHandler);
+router.get('/', authenticate, getOrdersHandler);
+router.get('/:id', authenticate, validateOrderId, getOrderHandler);
+router.post('/', authenticate, validateCreateOrder, createOrderHandler);
+router.patch('/:id/status', authenticate, validateOrderId, validateStatusUpdate, updateOrderHandler);
+router.delete('/:id', authenticate, validateOrderId, deleteOrderHandler);
 
 export default router;

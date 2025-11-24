@@ -9,15 +9,21 @@ export async function getUserHandler(req, res) {
     }
 }
 
-export async function updateUserHandler(req, res) {
-    try {
-        const updated = await updateUserService(req.params.id, req.body);
-        res.status(200).json(updated)
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to update profile'});
-    }
-}
 
+export async function updateUserHandler(req, res) {
+  try {
+    const updated = await updateUserService(
+      req.params.id,
+      req.filteredUpdate 
+    );
+
+    res.status(200).json(updated);
+
+  } catch (error) {
+    console.error("Update handler error:", error);
+    res.status(500).json({ error: "Failed to update profile" });
+  }
+}
 export async function deleteUserHandler(req, res) {
     try {
         await deleteUserService(req.params.id);

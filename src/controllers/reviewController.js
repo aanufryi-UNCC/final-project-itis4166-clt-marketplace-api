@@ -22,9 +22,14 @@ export async function getReviewsByUsernameHandler(req, res, next) {
 
 export async function createReviewHandler(req, res, next) {
   try {
-    const review = await createReviewService({ ...req.body, reviewerId: req.user.id });
+    const review = await createReviewService({
+      ...req.body,
+      reviewerId: req.user.id, // reviewerId grabbed from logged-in user
+    });
     res.status(201).json(review);
-  } catch (e) { next(e); }
+  } catch (e) {
+    next(e);
+  }
 }
 
 export async function updateReviewHandler(req, res, next) {

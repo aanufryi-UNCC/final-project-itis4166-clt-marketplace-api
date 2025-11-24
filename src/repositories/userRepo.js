@@ -2,9 +2,15 @@ import prisma from '../config/db.js';
 console.log('userRepo Prisma client loaded'); 
 
 export async function findById(id) {
-    return await prisma.user.findUnique( {
-        where: {id: Number(id)},
-    } );
+    return await prisma.user.findUnique({
+        where: { id: Number(id) }, // Ensure id is a number
+        select: {
+            id: true,
+            username: true,
+            email: true,
+            role: true,
+        },
+      });
 }
 //For checking emails when creating accounts
 export async function findUserByEmail(email) {
@@ -13,8 +19,23 @@ export async function findUserByEmail(email) {
 
 export async function createUser(data) {
     return await prisma.user.create({
-        data: data,
-        omit: {passwordHash: true}
+        data: data
+    });
+}
+
+// Save or update refresh token
+export async function upsertRefreshToken(userId, token) {
+    return await prisma.refreshToken.upsert({
+        where: { userId },
+        update: { token },
+        create: { userId, token },
+    });
+}
+
+// Delete refresh token
+export async function deleteRefreshToken(token) {
+    return await prisma.refreshToken.deleteMany({
+        where: { token },
     });
 }
 

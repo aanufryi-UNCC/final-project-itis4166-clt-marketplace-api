@@ -72,6 +72,7 @@ model Item {
   sellerId    Int
   category    Category @relation(fields: [categoryId], references: [id])
   seller      User     @relation(fields: [sellerId],   references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
   orders      Order[]
   reviews     Review[]
   @@map("items")

@@ -9,6 +9,8 @@ import itemRoutes from './routes/itemRoutes.js'
 import categoryRoutes from './routes/categoryRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
 import reviewRoutes  from './routes/reviewRoutes.js';
+import { swaggerUi, swaggerDocument } from "./config/swagger.js";
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -27,6 +29,8 @@ app.use('/api/items', itemRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/orders', orderRoutes)
 app.use('/api/reviews',  reviewRoutes);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');

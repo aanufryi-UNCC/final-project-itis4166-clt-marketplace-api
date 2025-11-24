@@ -1,4 +1,4 @@
-import { getUserProfileService, updateUserService, deleteUserService } from "../services/userService.js";
+import { getUserProfileService, updateUserService, deleteUserService, changeUserRoleService } from "../services/userService.js";
 
 export async function getUserHandler(req, res) {
     try {
@@ -8,7 +8,6 @@ export async function getUserHandler(req, res) {
         res.status(500).json({ error: 'Failed to fetch user profile'});
     }
 }
-
 
 export async function updateUserHandler(req, res) {
   try {
@@ -24,6 +23,7 @@ export async function updateUserHandler(req, res) {
     res.status(500).json({ error: "Failed to update profile" });
   }
 }
+
 export async function deleteUserHandler(req, res) {
     try {
         await deleteUserService(req.params.id);
@@ -31,4 +31,25 @@ export async function deleteUserHandler(req, res) {
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch user profile'});
     }
+}
+
+export async function changeUserRoleHandler(req, res, next) {
+  try {
+    console.log("req.body raw:", req.body);
+    const userId = Number(req.params.id);
+    const { role } = req.body;
+
+    const updatedUser = await changeUserRoleService(userId, role);
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const { passwordHash, ...safeUser } = updatedUser;
+    res.json(safeUser);
+
+  } catch (error) {
+    console.error("Error changing user role:", error);
+    res.status(500).json({ error: 'Failed to update role' });
+  }
 }

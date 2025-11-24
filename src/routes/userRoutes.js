@@ -4,7 +4,8 @@ import { authorizeModerator } from '../middleware/authorizeModerator.js';
 import {
   getUserHandler,
   updateUserHandler,
-  deleteUserHandler
+  deleteUserHandler,
+  changeUserRoleHandler
 } from '../controllers/userController.js';
 import {
   validateUserId,
@@ -24,6 +25,6 @@ router.patch('/:id', authenticate, validateUserId, filterUserUpdateFields, updat
 router.delete('/:id', authenticate, validateUserId, deleteUserHandler);
 
 //mod only
-router.patch('/:id/role', authenticate, authorizeModerator, validateUserId, validateRoleChange, updateUserHandler);
+router.patch('/:id/role', authenticate, authorizeModerator, validateUserId, validateRoleChange, changeUserRoleHandler);
 
 export default router;

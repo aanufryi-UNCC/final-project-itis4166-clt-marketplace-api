@@ -1,4 +1,4 @@
-import { findById, createUser, updateUser, deleteUser } from "../repositories/userRepo.js";
+import { findById, createUser, updateUser, deleteUser, changeUserRole } from "../repositories/userRepo.js";
 
 export async function getUserProfileService(id) {
     const user = await findById(id);
@@ -19,6 +19,10 @@ export async function updateUserService(id, data) {
 
 export async function deleteUserService(id) {
     return await deleteUser(id);
+}
+
+export async function changeUserRoleService(userId, role) {
+    return await changeUserRole(Number(userId), role);
 }
 
 export async function getReviewsByUserService(username) {

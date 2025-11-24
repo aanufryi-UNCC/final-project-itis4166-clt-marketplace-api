@@ -9,7 +9,16 @@ export async function getReviewsByUsernameService(username) {
 }
 
 export async function createReviewService(data) {
-  return ReviewRepo.createReview(data);
+  const { rating, comment, itemId } = data;
+
+  const review = await ReviewRepo.createReview({
+    rating,
+    comment: comment ?? null,
+    itemId: Number(itemId),       // convert to number, because for some reason it gets confused if you dont even if its a number
+    reviewerId: data.reviewerId, 
+  });
+
+  return review;
 }
 
 export async function updateReviewService(id, data) {

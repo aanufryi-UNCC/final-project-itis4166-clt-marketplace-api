@@ -19,9 +19,6 @@ export const validateCreateReview = [
   body('itemId')
     .isInt({ min: 1 })
     .withMessage('Item ID must be a positive integer'),
-  body('reviewerId')
-    .isInt({ min: 1 })
-    .withMessage('Reviewer ID must be a positive integer'),
   handleValidationErrors,
 ];
 

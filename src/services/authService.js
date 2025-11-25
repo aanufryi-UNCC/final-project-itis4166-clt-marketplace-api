@@ -33,10 +33,19 @@ export async function signUp(username, email, password) {
 
 export async function logIn(email, password) {
     const user = await findUserByEmail(email);
-    if (!user) throw new Error('Invalid credentials');
+
+    if (!user) {
+        const err = new Error("Invalid email or password");
+        err.status = 401;
+        throw err;
+    }
 
     const isMatch = await bcrypt.compare(password, user.passwordHash);
-    if (!isMatch) throw new Error('Invalid credentials');
+    if (!isMatch) {
+        const err = new Error("Invalid email or password");
+        err.status = 401;
+        throw err;
+    }
 
     return await issueTokens(user);
 }

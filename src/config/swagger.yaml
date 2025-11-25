@@ -4,6 +4,8 @@ info:
   version: "1.0.0"
 
 servers:
+  - url: https://clt-marketplace-api.onrender.com
+    description: Render server
   - url: http://localhost:3000
 
 tags:

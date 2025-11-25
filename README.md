@@ -11,6 +11,7 @@ How to setup Enviroment
    DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/YOUR_DB_NAME" # PostgreSQL connection
    JWT_SECRET="jwt_secret_here" # JWT Secret key for authentication
    PORT=8080 # Server port
+   NODE_ENV=development
    
 6. Prisma setup
    run the following commands:

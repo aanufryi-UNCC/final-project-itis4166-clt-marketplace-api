@@ -8,8 +8,8 @@ How to setup Enviroment
    
 4. Create a .env file in the root of the project
    Add the required enviroment variables to the file:
-   DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/YOUR_DB_NAME" # PostgreSQL connection
-   JWT_SECRET="jwt_secret_here" # JWT Secret key for authentication
+   DATABASE_URL=postgresql://USER:PASSWORD@localhost:5432/YOUR_DB_NAME # PostgreSQL connection
+   JWT_SECRET=jwt_secret_here # JWT Secret key for authentication
    PORT=8080 # Server port
    NODE_ENV=development
    
